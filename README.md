@@ -10,6 +10,7 @@ All options should be passed as environment variabled to the app
 - `Rescan Interval` - interval in ms between scanning of new proxies (over [proxy-lists](https://github.com/chill117/proxy-lists)), env variable RESCAN_INTERVAL (default 120000)
 - `Refresh Interval` - interval in ms between filtering of available proxies by dummy request, env variable REFRESH_INTERVAL (default 60000)
 - `Proxy Limit` - limit of used ip's (proxies) for rotating, env variable PROXY_LIMIT (default 10)
+- `Rotate Every N Request` - change ip every N request, env variable ROTATE_EVERY_N_REQUEST (default 1)
 - `Port` - port or proxy server, env variable PORT (default 8080)
 - `Max Sockets` - max count of sockets to use (depends on your OS an it's settings), env variable MAX_SOCKETS (default 20)
 
@@ -73,6 +74,7 @@ docker run --expose 8080 -p 8080:8080 -d \
 -e RESCAN_INTERVAL=120000 \
 -e REFRESH_INTERVAL=60000 \
 -e PROXY_LIMIT=10 \
+-e ROTATE_EVERY_N_REQUEST=1\
 -e PORT=8080 \
 -e MAX_SOCKETS=20 \
 allbear/proxy-rotator

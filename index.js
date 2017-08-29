@@ -12,7 +12,8 @@ const options = {
   rescanInterval: parseInt(process.env.RESCAN_INTERVAL) || 2 * 60 * 1000,
   proxyLimit: parseInt(process.env.PROXY_LIMIT) || 10,
   port: process.env.PORT || 8080,
-  maxSockets: parseInt(process.env.MAX_SOCKETS) || 20
+  maxSockets: parseInt(process.env.MAX_SOCKETS) || 20,
+  rotateEveryNRequest: parseInt(process.env.ROTATE_EVERY_N_REQUEST) || 1
 };
 
 const logger = new Logger({isEnableInfo: true});
