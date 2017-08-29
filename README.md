@@ -13,7 +13,7 @@ All options should be passed as environment variabled to the app
 - `Port` - port or proxy server, env variable PORT (default 8080)
 - `Max Sockets` - max count of sockets to use (depends on your OS an it's settings), env variable MAX_SOCKETS (default 20)
 
-## Run App As Node.js App
+## Run App as Node.js App
 
 Clone app:
 ```bash
@@ -37,6 +37,47 @@ Run server:
 ```bash
 npm start
 ```
+
+## Run App as Builded Docker Container
+
+Clone app:
+```bash
+git clone https://github.com/all-bear/nodejs.proxy-rotator.git ./proxy
+cd proxy
+```
+
+Init options:
+```bash
+cp .env.example .env
+```
+
+Edit options - Edit file `.env` to match your requirements
+
+Run:
+```bash
+docker-compose up
+```
+please note, that docker-compose.yml has hardcoded port so you are not able to change it in `.env` file
+
+## Run App as Docker Image
+
+Pull image:
+```bash
+docker pull allbear/proxy-rotator
+```
+
+Run image:
+```bash
+docker run --expose 8080 -p 8080:8080 -d \
+-e IS_LOG_ENABLED=1 \
+-e RESCAN_INTERVAL=120000 \
+-e REFRESH_INTERVAL=60000 \
+-e PROXY_LIMIT=10 \
+-e PORT=8080 \
+-e MAX_SOCKETS=20 \
+allbear/proxy-rotator
+```
+please note, that you can change port to another, if you want
 
 ## Usage
 You can use it like simple proxy, for example with [request](https://www.npmjs.com/package/request):

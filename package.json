@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "./node_modules/mocha/bin/mocha --require should --timeout 120000"
+    "test": "./node_modules/mocha/bin/mocha --require should --timeout 120000",
+    "docker:build": "docker build -t $IMAGE .",
+    "docker:bash": "docker exec -it $CONTAINER /bin/bash",
+    "docker:run": "PROXY_CONTAINER=$(docker run --env-file ./.env --expose $PORT -p $PORT:$PORT -d $IMAGE) && docker logs $PROXY_CONTAINER -f"
   },
   "author": "Oleh Biriukov",
   "license": "ISC",
