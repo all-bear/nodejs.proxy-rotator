@@ -10,7 +10,9 @@ const options = {
   isEnableInfo: process.env.IS_LOG_ENABLED || true,
   refreshInterval: parseInt(process.env.REFRESH_INTERVAL) || 60 * 1000,
   rescanInterval: parseInt(process.env.RESCAN_INTERVAL) || 2 * 60 * 1000,
+  minProxyLimit: parseInt(process.env.MIN_PROXY_LIMIT) || 3,
   proxyLimit: parseInt(process.env.PROXY_LIMIT) || 10,
+  proxyCheckTimeLimit: parseInt(process.env.PROXY_CHECK_TIME_LIMIT) || 4000,
   port: process.env.PORT || 8080,
   maxSockets: parseInt(process.env.MAX_SOCKETS) || 20,
   rotateEveryNRequest: parseInt(process.env.ROTATE_EVERY_N_REQUEST) || 1
