@@ -1,5 +1,6 @@
 const {exec} = require('child_process');
 const request = require('request');
+const it = require('mocha-param').itParam;
 
 const PROXY_URL = 'http://localhost:8080/';
 const GET_IP_URL = 'http://api.ipify.org/?format=json';
@@ -7,15 +8,29 @@ const GET_IP_HTTPS_URL = 'https://api.ipify.org/?format=json';
 const IP_REGEXP = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
 
 describe('proxy', function() {
-    before(function(done) {
-        exec('npm start');
+    it('should make request over parameter and get some html', [
+        { url: 'https://google.com', minHtmlLength: 100 },
+        { url: 'http://google.com', minHtmlLength: 100 },
+        { url: 'http://lifehacker.com', minHtmlLength: 100 },
+    ], function (done, data) {
+        request({
+            url: `${PROXY_URL}?url=${encodeURIComponent(data.url)}`,
+            method: 'GET',
+            followAllRedirects: true
+        }, (err, response, body) => {
+            if (err) {
+                return done(err);
+            }
 
-        setTimeout(() => {
+            body.length.should.be.greaterThan(data.minHtmlLength);
+
             done();
-        }, 60 * 1000);
+        });
     });
 
-    it('it should make request over parameter', function(done) {
+    it('it should make request over parameter', [
+        
+    ], function(done) {
         request({
             url: `${PROXY_URL}?url=${encodeURIComponent(GET_IP_URL)}`,
             method: 'GET',
@@ -49,7 +64,7 @@ describe('proxy', function() {
         })
     });
 
-    it('it should make request over proxy', function(done) {
+    /**it('it should make request over proxy', function(done) {
         request({
             url: GET_IP_URL,
             method: 'GET',
@@ -101,5 +116,5 @@ describe('proxy', function() {
 
             done();
         })
-    });
+    });**/
 });

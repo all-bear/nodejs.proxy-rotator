@@ -24,11 +24,13 @@ process.on('uncaughtException', (e) => {
   if (e.code === 'ECONNRESET') {
     // https://github.com/request/request/issues/2161
     // NOP
+  } else if (e.code = 'EMFILE') {
+    // TODO sometimes on proxy refresh
   } else if (/AssertionError:/g.test(e.toString())) {
     // TODO sometimes on proxy retrieve
   } else {
     // TODO error thrown from here will not be handled, even if handler is setted, like .on('error', ...) for request
-    // throw e;
+    throw e;
   }
 });
 
