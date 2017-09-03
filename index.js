@@ -15,7 +15,8 @@ const options = {
   proxyCheckTimeLimit: parseInt(process.env.PROXY_CHECK_TIME_LIMIT) || 4000,
   port: process.env.PORT || 8080,
   maxSockets: parseInt(process.env.MAX_SOCKETS) || 20,
-  rotateEveryNRequest: parseInt(process.env.ROTATE_EVERY_N_REQUEST) || 1
+  rotateEveryNRequest: parseInt(process.env.ROTATE_EVERY_N_REQUEST) || 1,
+  maxConcurrentCheckRequests: parseInt(process.env.MAX_CONCURRENT_CHECK_REQUESTS) || 30
 };
 
 const logger = new Logger({isEnableInfo: true});
@@ -24,11 +25,15 @@ process.on('uncaughtException', (e) => {
   if (e.code === 'ECONNRESET') {
     // https://github.com/request/request/issues/2161
     // NOP
+  } else if (e.code = 'EMFILE') {
+    // TODO sometimes on proxy refresh
+    // NOP
   } else if (/AssertionError:/g.test(e.toString())) {
     // TODO sometimes on proxy retrieve
+    // NOP
   } else {
     // TODO error thrown from here will not be handled, even if handler is setted, like .on('error', ...) for request
-    // throw e;
+    throw e;
   }
 });
 
